@@ -340,4 +340,532 @@ int main(void)
 	return 0;
 }
 
+
+#include <stdio.h>
+
+#define NUM_RATES ((int) (sizeof(value) / sizeof(value[0])))
+#define INITIAL_BALANCE 100.00
+
+int main(void)
+{
+	int i, low_rate, num_years, year;
+	double value[5];
+
+	printf("Enter interest rate:");
+	scanf_s("%d", &low_rate);
+	printf("Enter number of years: ");
+	scanf_s("%d", &num_years);
+
+	printf("\nYears");
+	for (i = 0; i < NUM_RATES; i++) {
+		printf("%6d%", low_rate + i);
+		value[i] = INITIAL_BALANCE;
+	}
+	printf("\n");
+
+	for (year = 1; year <= num_years; year++)
+	{
+		printf("%3d    ", year);
+		for (i = 0; i < NUM_RATES; i++) {
+			value[i] += (low_rate + i) / 100.0 * value[i];
+			printf("%7.2f", value[i]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+
+
+#include <stdio.h>
+
+int main() {
+	int matrix[5][5];
+	int rowSums[5] = { 0 };
+	int colSums[5] = { 0 };
+
+	// Read the 5x5 array
+	for (int i = 0; i < 5; i++) {
+		printf("Enter row %d: ", i + 1);
+		for (int j = 0; j < 5; j++) {
+			scanf_s("%d", &matrix[i][j]);
+			rowSums[i] += matrix[i][j]; // Calculate row sum
+			colSums[j] += matrix[i][j]; // Calculate column sum
+		}
+	}
+
+	// Print row sums
+	printf("Row totals: ");
+	for (int i = 0; i < 5; i++) {
+		printf("%d ", rowSums[i]);
+	}
+	printf("\n");
+
+	// Print column sums
+	printf("Column totals: ");
+	for (int j = 0; j < 5; j++) {
+		printf("%d ", colSums[j]);
+	}
+	printf("\n");
+
+	return 0;
+}
+
+
+#include <stdio.h>
+
+int main(void)
+{
+	int matrix[5][5];
+	int rowSums[5] = { 0 };
+	int colSums[5] = { 0 };
+
+	for (int i = 0; i < 5; i++) {
+		printf("Enter row %d", i + 1);
+		for (int j = 0; j < 5; j++) {
+			scanf_s("%d", &matrix[i][j]);
+			rowSums[i] += matrix[i][j];
+			colSums[j] += matrix[i][j];
+		}
+	}
+}
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 10
+
+void printArray(char array[SIZE][SIZE]) {
+	for (int i = 0; i < SIZE; i++) {
+		for (int j = 0; j < SIZE; j++) {
+			printf("%c ", array[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+int main() {
+	char array[SIZE][SIZE];
+	int directions[4][2] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+	int x = 0, y = 0, newX, newY, direction, step;
+	char letter = 'A';
+
+	// Initialize the array with dots
+	for (int i = 0; i < SIZE; i++) {
+		for (int j = 0; j < SIZE; j++) {
+			array[i][j] = '.';
+		}
+	}
+
+	srand(time(NULL));
+
+	array[x][y] = letter++;
+
+	while (letter <= 'Z') {
+		// Try to move to a new random direction
+		step = 0;
+		while (step < 4) {
+			direction = rand() % 4;
+			newX = x + directions[direction][0];
+			newY = y + directions[direction][1];
+
+			if (newX >= 0 && newX < SIZE && newY >= 0 && newY < SIZE && array[newX][newY] == '.') {
+				x = newX;
+				y = newY;
+				array[x][y] = letter++;
+				break;
+			}
+			else {
+				step++;
+			}
+		}
+
+		// If no direction is possible, break the loop
+		if (step == 4) {
+			break;
+		}
+	}
+
+	printArray(array);
+
+	return 0;
+}
+
+
+
+
+#include <stdio.h>
+
+
+int main(void)
+{
+	for (int i = 0; i < 5; i++) {
+		for (int j = 5; j > 0; j--) {
+			printf(" ");
+		}
+	}
+}
+
+*/
+
+/* 반환형 함수이름 (매개변수)
+
+함수를 앞에 선언하는 이유는 : 컴파일 되기 전에 함수가 적용된 형태가 있다고 알려주는 것임, main 함수 앞에 함수의 형태를 '선언'한다.
+
+함수 유형의 4가지
+
+1)매개변수 있고, 반환값 있음
+int add(int a, int b){
+	int result = a + b;
+
+	return result
+}
+
+2)매개변수 있고, 반환값 없음
+void reuslt(int num)
+{
+	printf("덧셈 결과 : %d\n", num);
+}
+
+
+#include <stdio.h>
+#include <stdbool.h>
+ External varialbes
+int contents[STACK_SIZE];
+int top = 0;
+
+void make_empty(void) {
+	top = 0;
+}
+bool is_empty(void) {
+	return top == 0;
+}
+bool is_full(void)
+{
+	return top == STACK_SIZE;
+}
+void push(int i)
+{
+	if (is_full())
+		stack_overflow();
+	else
+		contetns[top++] = i;
+}
+
+int pop(void)
+{
+	if (is_empty())
+		stack_underflow();
+	else
+		return contents[--top];
+}
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX_NUMBER (100)
+
+int g_secret_number;
+
+void initialize_number_generaor(void);
+void choose_new_secret_number(void);
+void read_guesses(void);
+
+int main(void)
+{
+	char command = '\0';
+	initialize_number_generaor();
+	do {
+		choose_new_secret_number();
+		printf("컴퓨터가 난수를 설정했습니다. 맞춰보세요\n");
+		read_guesses();
+		printf("한 판 더? (Y/N)");
+		printf("\n");
+	} while (command == 'y' || command == 'Y');
+
+	return 0;
+}
+
+void initalize_number_genrator(void)
+{
+	srand((unsigned)time(NULL));
+}
+
+void choose_new_secret_number(void)
+{
+	return rand() % MAX_NUMBER + 1;
+}
+
+void read_guesses(int secret_number)
+{
+	int guess = 0;
+	int num_guesses = 0;
+
+	for (;;) {
+		++num_guesses;
+		printf("정답은?");
+		scanf_s("%d", &guess);
+
+		if (guess == secret_number) {
+			printf("%d번째 시도 만에 맞추셨네요\n\n", num_guesses);
+			return;
+		}
+		else if (guess < secret_number) {
+			printf("너무 작네요 다시 해봐\n");
+		}
+		else {
+			printf("너무 크네요 다시 ㄱㄱ\n");
+		}
+	}
+}
+
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define NUM_RANKS (13)
+#define NUM_SUITS (4)
+#define NUME_CARDS (5)
+
+int g_num_in_rank[NUM_RANKS] = { 0, };
+int g_num_in_suit[NUM_SUITS] = { 0, };
+bool g_is_straight = false;
+bool g_is_flush = false;
+bool g_is_four = false;
+bool g_is_three = false;
+int g_pairs = 0;
+
+void read_cards(void);
+void analyze_hand(void);
+void print_result(void);
+
+int main(void)
+{
+	for (;;) {
+		read_cards();
+		analyze_hand();
+		print_result();
+	}
+}
+
+void read_cards(void)
+{
+	bool does_card_exists[NUM_RANKS][NUM_SUITS];
+	char ch = '\0';
+	char rank_ch = '\0';
+	char suit_ch = '\0';
+	int rank = 0;
+	int suit = 0;
+	bool is_bad_card = false;
+	int cards_read = 0;
+
+	for (rank = 0; rank < NUM_RANKS; ++rank) {
+		g_num_in_rank[rank] = 0;
+		for (suit = 0; suit < NUM_SUITS; ++suit) {
+			does_card_exists[rank][suit] = false;
+		}
+	}
+
+	for (suit = 0; suit < NUM_SUITS; ++suit) {
+		g_num_in_suit[suit] = 0;
+	}
+
+	while (cards_read < NUME_CARDS)
+	{
+		is_bad_card = false;
+
+		rank_ch = getchar();
+		switch (rank_ch)
+		{
+		case '0':
+			exit(EXIT_SUCCESS);
+		case '2':
+			rank = 0;
+			break;
+		case '3':
+			rank = 1;
+			break;
+		case '4':
+			rank = 2;
+			break;
+		case '5':
+			rank = 3;
+			break;
+		case '6':
+			rank = 4;
+			break;
+		case '7':
+			rank = 5;
+			break;
+		case '8':
+			rank = 6;
+			break;
+		case '9':
+			rank = 7;
+			break;
+		case 't':
+			
+		case 'T':
+			rank = 8;
+			break;
+		case 'j':
+			/* intentional fallthrough 
+		case 'J':
+			rank = 9;
+			break;
+		case 'q':
+			/* intentional fallthrough 
+		case 'Q':
+			rank = 10;
+			break;
+		case 'k':
+			/* intentional fallthrough 
+		case 'K':
+			rank = 11;
+			break;
+		case 'a':
+			/* intentional fallthrough 
+		case 'A':
+			rank = 12;
+			break;
+		default:
+			is_bad_card = true;
+			break;
+		}
+		suit_ch = getchar();
+		switch (suit_ch) {
+		case 'c':
+			/* intentional fallthrough 
+		case 'C':
+			suit = 0;
+			break;
+		case 'd':
+			/* intentional fallthrough
+		case 'D':
+			suit = 1;
+			break;
+		case 'h':
+			/* intentional fallthrough 
+		case 'H':
+			suit = 2;
+			break;
+		case 's':
+			/* intentional fallthrough 
+		case 'S':
+			suit = 3;
+			break;
+		default:
+			is_bad_card = true;
+			break;
+		}
+
+		while ((ch = getchar()) != '\n') {
+			if (ch != ' ') {
+				is_bad_card = true;
+			}
+		}
+
+		if (is_bad_card) {
+			printf("유효하지 않은 카드입니다; 다시 입력해주세요.\n");
+		}
+		else if (card_exists[rank][suit]) {
+			printf("이미 존재하는 카드입니다; 다시 입력해주세요.\n");
+		}
+		else {
+			++g_num_in_rank[rank];
+			++g_num_in_suit[suit];
+			does_card_exists[rank][suit] = true;
+			++cards_read;
+		}
+	}
+}
+
+void analyze_hand(void)
+{
+	int num_consec = 0;
+	int rank = 0;
+	int suit = 0;
+	g_is_straight = false;
+	g_is_flush = false;
+	g_is_four = false;
+	g_is_three = false;
+	g_pairs = 0;
+
+	/* 플러시인지 확인 
+	for (suit = 0; suit < NUM_SUITS; ++suit) {
+		if (g_num_in_suit[suit] == NUM_CARDS) {
+			g_is_flush = true;
+		}
+	}
+
+	/* 스트레이트인지 확인 
+	rank = 0;
+	while (g_num_in_rank[rank] == 0) {
+		++rank;
+	}
+
+	for (; rank < NUM_RANKS && g_num_in_rank[rank] > 0; ++rank) {
+		++num_consec;
+	}
+
+	if (num_consec == NUM_CARDS) {
+		g_is_straight = true;
+		return;
+	}
+
+	/* 포카드/쓰리카드 여부와 페어의 개수를 확인
+	for (rank = 0; rank < NUM_RANKS; ++rank) {
+		if (g_num_in_rank[rank] == 4) {
+			g_is_four = true;
+		}
+
+		if (g_num_in_rank[rank] == 3) {
+			g_is_three = true;
+		}
+
+		if (g_num_in_rank[rank] == 2) {
+			++g_pairs;
+		}
+	}
+}
+
+void print_result(void)
+{
+	if (g_is_straight && g_is_flush) {
+		printf("스트레이트 플러시");
+	}
+	else if (g_is_four) {
+		printf("포카드");
+	}
+	else if (g_is_three && g_pairs == 1) {
+		printf("풀하우스");
+	}
+	else if (g_is_flush) {
+		printf("플러시");
+	}
+	else if (g_is_straight) {
+		printf("스트레이트");
+	}
+	else if (g_is_three) {
+		printf("쓰리카드");
+	}
+	else if (g_pairs == 2) {
+		printf("투페어");
+	}
+	else if (g_pairs == 1) {
+		printf("원페어");
+	}
+	else {
+		printf("하이카드");
+	}
+
+	printf("\n\n");
+}
+
 */
