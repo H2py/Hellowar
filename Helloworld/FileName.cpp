@@ -869,3 +869,14 @@ void print_result(void)
 }
 
 */
+#include <stdio.h>
+int main(void)
+{
+	int num1 = 1, num2 = 2, num3 = 3;
+	int* arr[3] = { &num1, &num2, &num3 };
+
+	printf("주소값 : %p %p %p\n", arr[0], arr[1], arr[2]);
+	printf("값 %d %d %d \n", *arr[0], *arr[1], *arr[2]);
+
+	return 0;
+}
