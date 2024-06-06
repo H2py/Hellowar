@@ -868,15 +868,104 @@ void print_result(void)
 	printf("\n\n");
 }
 
-*/
+
 #include <stdio.h>
+
+#define ARRAY_SIZE 10
+
+void get_max_min(int arr[], int size, int* out_max, int* out_min);
+
 int main(void)
 {
-	int num1 = 1, num2 = 2, num3 = 3;
-	int* arr[3] = { &num1, &num2, &num3 };
+	int int_arr[ARRAY_SIZE] = { 0, };
+	int i = 0;
+	int big = 0;
+	int small = 0;
 
-	printf("주소값 : %p %p %p\n", arr[0], arr[1], arr[2]);
-	printf("값 %d %d %d \n", *arr[0], *arr[1], *arr[2]);
+	printf("숫자 %d개를 입력하세요:", ARRAY_SIZE);
+	for (i = 0; i < ARRAY_SIZE; ++i) {
+		scanf_s("%d", &int_arr[i]);
+	}
+
+	get_max_min(int_arr, ARRAY_SIZE, &big, &small);
+
+	printf("최대값: %d\n", big);
+	printf("Min: %d\n", small);
 
 	return 0;
 }
+
+void get_max_min(int arr[], int size, int* out_max, int* out_min)
+{
+	*out_max = *out_min = arr[0];
+	for (int i = 0; i < size; ++i) {
+		if (*out_max < arr[i]) {
+			*out_max = arr[i];
+		}
+		else if (arr[i] < *out_min) {
+			*out_min = arr[i];
+		}
+	}
+}
+
+Pointer is good
+
+# include <stdio.h>
+
+#define N 10
+
+int main(void)
+{
+	int a[N], * p;
+
+	printf("Enter %d numbers: ", N);
+	for (p = a; p < a + N; p++)
+		scanf_s("%d", p);
+
+	printf("In reverse order:");
+	for (p = a + N - 1; p >= a; p--)
+		printf(" %d", *p);
+	printf("\n");
+
+	return 0;
+}
+
+
+#include <stdio.h>
+
+void swap(int a, int b);
+void swap_addr(int* a, int* b);
+
+int main(void)
+{
+	int a = 10;
+	int b = 20;
+	printf("a의 주소는 : %d\n", &a);
+	printf("b의 주소는 : %d\n", &b);
+
+	printf("swap 함수 전 a : %d, b : %d\n", a, b);
+	swap(a, b);
+	printf("swap 함수 후 a : %d, b : %d\n", a, b);
+
+	printf("(주소값 전달)swap 함수 전 a : %d, b : %d\n", a, b);
+	swap_addr(&a, &b);
+	printf("(주소값 전달)swap 함수 후 a : %d, b : %d\n", a, b);
+	return 0;
+}
+
+void swap(int a, int b)
+{
+	int temp = a;
+	a = b;
+	b = temp;
+
+
+}
+
+void swap_addr(int* a, int* b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+*/
